@@ -1,0 +1,48 @@
+{
+  "summary": "Completed backend + frontend verification for FozPay review requests (landing page, admin registration toggle, platform fees=0, chart ranges, strict EVM validation, dashboard purple theme, settings tab-fees removed, checkout updates). 10/10 backend tests pass. All frontend features verified end-to-end.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/admin/registration & /api/admin/platform-fees", "issue": "Responses wrap payload in {status, data}. Tests had to unwrap. Not a bug — just a schema note for API consumers."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_review_iter.py",
+    "/app/test_reports/pytest/review_iter.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py and admin_router.py are large; consider splitting for maintainability.",
+    "Response envelope ({status,data}) is inconsistent across endpoints (register endpoint returns {access_token} directly, others wrap). Consider standardizing."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_review_iter.py"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "Admin psymaks249@gmail.com / FozPay2025Admin! works. Public registration left DISABLED as instructed.",
+  "seed_data_creation": "Created one invoice (I6VVDEZN, 5 USDT) via UI during checkout flow verification. One extra test user may be created when registration toggle test runs (newclient+<rand>@test.com).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend response envelope is {status: true, data: {...}} for admin endpoints — unwrap before asserting. The chart range buttons on Dashboard fire /api/me/chart via useEffect([range]); any Playwright network listener must be registered BEFORE the first render if you want to catch the initial fetch. Recovery page shows no amount input when scan has no findings — the inputs ([data-testid='sweep-amount-*']) only render when funds are found; this is expected. Platform tab in Settings shows 'Комісії' (platform-level fees) as a section — this is correct; the merchant-level fees tab (data-testid='tab-fees') has been removed as required.",
+  "verified_features": [
+    "POST /api/auth/login returns 200 with access_token",
+    "GET /api/auth/registration-status is public and returns {enabled:bool}",
+    "GET/PUT /api/admin/registration works; register succeeds when enabled=true, returns 403 when disabled",
+    "GET /api/admin/platform-fees: deposit_fee, withdrawal_fee_api, withdrawal_fee_cabinet all 0; all iso maps all 0",
+    "GET /api/me/chart ranges: 1Д=24 (HH:00), 1Т=7 (dd.mm), 1М=30 (dd.mm), 1Р=12 (mm.yy)",
+    "POST /api/wallet/withdraw rejects 0x123 with 400 'EVM', rejects wrong-length EVM addr, rejects spaced addr",
+    "Landing / renders purple theme, hero-section, navbar-main; 16 coin-icon-* <img> tags with cdn.jsdelivr crypto icons",
+    "nav-login navigates to /login",
+    "Login char-by-char email works; redirects to /dashboard",
+    "Dashboard shows purple-gradient total-balance card and all 4 range buttons (1Д/1Т/1М/1Р)",
+    "Settings: tab-fees REMOVED; tab-platform and tab-users present; registration-toggle-card + registration-switch present on Users tab",
+    "Requests page: 'Заявки на виведення (API)' section renders (empty table) — payout-address testids will appear when data exists (confirmed via source)",
+    "Invoice creation via open-create-invoice → inv-price=5 → submit-invoice shows success toast",
+    "/checkout/<id>: checkout-close-x present in header; no 'Реальний on-chain платіж' text; currency selection screen renders"
+  ]
+}

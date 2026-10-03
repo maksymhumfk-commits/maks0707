@@ -1,0 +1,24 @@
+{
+  "summary": "Iteration 4 backend + light UI verification for FozPay auto-convert / opBNB. 16/16 pytest tests pass on the public REACT_APP_BACKEND_URL, covering: admin login (Bearer), GET/PUT /api/admin/convert-config (defaults + valid update + 400 on unknown ISO + 400 on empty list), opBNB (network_id=9) presence in /api/admin/networks and /api/v1/public/currency-network-list for USDT+BNB, merchant-API /api/v1/private/create-output normal USDT path (auto_converted=false, USDT debited ~10.8), auto-convert BNB on BSC (auto_converted=true, converted_from='USDT', db.transactions.convert_from='USDT' and convert_chain='bsc', Pending), auto-convert opBNB routing (network_id=9, tx.convert_chain='bsc'), INSUFFICIENT -> 400, merchant PUT /api/merchant {auto_convert:false} then BNB payout -> 400 (re-enabled after), and regressions on /public/currency-list, /private/get-address, /order/create and cabinet /api/wallet/withdraw. UI smoke: logged in as admin, verified data-testids auto-convert-toggle (Merchant tab), convert-config-card + cc-enabled + cc-src-USDT + cc-src-USDC + cc-save (Platform tab) all render.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_autoconvert_opbnb.py",
+    "/app/test_reports/pytest/iter4_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py is now 1873 lines — splitting merchant API, cabinet, admin and worker into separate modules will improve maintainability and testability.",
+    "_prepare_withdraw uses 1.02 slippage buffer + PRICES_USD from catalog.py which is a hard-coded snapshot; when actual 1inch swap runs the received amount can diverge. Consider fetching live quote at prepare-time from oneinch.quote() to reduce over/under debiting.",
+    "auto_convert_enabled defaults to True on merchant record and platform; explicit is safer — persist the default on first read so ops know the flag exists.",
+    "convert-config PUT validates unknown ISO and empty list, but does not check that each source ISO actually has an ERC20 representation on at least one supported swap chain — an admin could enable e.g. BTC as a source and get silent skips at swap time."
+  ],
+  "updated_files": ["/app/backend/tests/test_autoconvert_opbnb.py"],
+  "success_rate": {"backend": "100% (16/16)", "frontend": "100% (all required data-testids render)"},
+  "test_credentials": "admin@fozpay.io / FozPay!Admin2026 (from /app/memory/test_credentials.md); Merchant Token/Secret also from that file.",
+  "seed_data_creation": "Tests seed db.wallets balances for admin user directly (USDT/USDC/BNB) inside each test. Test tx amounts are small and prefixed with obvious 0x1111.. addresses. No permanent seed data.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Autoconvert + opBNB scope is fully green. To re-run: `python -m pytest /app/backend/tests/test_autoconvert_opbnb.py -v -o addopts=`. The tests import make_signature from /app/backend/core.py and load /app/frontend/.env for REACT_APP_BACKEND_URL. Tests leave merchant.auto_convert=True and platform auto_convert_sources=['USDT','USDC']. As noted by main agent, the withdrawal_worker's real 1inch swap will fail on the empty hot wallet — that is expected and NOT tested here.",
+  "rca of the issue": "N/A — no regressions or defects found."
+}
