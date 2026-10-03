@@ -42,3 +42,12 @@
 - Fix: _generate_qr_data_url() now PNG-via-Pillow with pure-Python SVG fallback; requirements.txt pins qrcode[pil]>=7.4.2.
 - Verified by testing agent (iteration_5.json): backend 4/4, frontend 100%, no 500 at setup/enable/disable.
 - Server remediation: `pip install pillow && systemctl restart fozpay-api`.
+
+## Iteration (2026-10-03): Payout filters + Light redesign + mobile
+- Requests page → "Заявки на виведення (API)": added search (wallet/hash/order/id), period filter (all/today/7d/30d/custom dates), results counter, and a Дата column. Client-side filter over /payouts (created_ts seconds). testids: payout-search, payout-period, payout-date-from/to, payout-reset, payout-count.
+- Full visual redesign: LIGHT emerald theme (heleket-style) replacing violet/fuchsia AI look. Fonts: Clash Display (headings), Plus Jakarta Sans (body), JetBrains Mono. New index.css global theme + btn-foz/foz-grad-text helpers; blue-600 CTA remapped to brand emerald. Recolored Layout, Login, Dashboard (balance card + chart #10B981), Settings.
+- Landing rebuilt light (hero + feature chips, advantages, deposit/exchange/send, stats, coins grid, 2-step onboarding, FAQ, CTA, footer). Removed AI tagline "Крипто-еквайринг нового покоління • Без KYC для транзиту"; new headline "Прийом платежів у криптовалюті для вашого бізнесу".
+- Mobile: sidebar backdrop (sidebar-backdrop) + scrollable sidebar; responsive filter bar.
+- Page title set to "FozPay — прийом криптоплатежів".
+- Verified by testing agent iteration_6.json: frontend 100%, no console errors.
+- To apply on fozpay.online: on the server `cd /opt/fozpay && git pull && cd frontend && yarn install && yarn build && systemctl reload nginx` (after pushing these changes to the GitHub repo).
