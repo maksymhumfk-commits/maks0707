@@ -36,3 +36,9 @@
 - Audit log for set-mnemonic (admin id + timestamp).
 - Optional: split server.py routers into modules (maintainability).
 - Secondary badge "Користувацька сід-фраза" after user sets seed (cosmetic).
+
+## Bug fix (2026-10-03): 2FA enable returned 500
+- Root cause: /api/security/2fa/setup generated QR via qrcode.make().save(PNG) which needs Pillow; Pillow not installed on fresh VPS (qrcode lists it only as optional extra).
+- Fix: _generate_qr_data_url() now PNG-via-Pillow with pure-Python SVG fallback; requirements.txt pins qrcode[pil]>=7.4.2.
+- Verified by testing agent (iteration_5.json): backend 4/4, frontend 100%, no 500 at setup/enable/disable.
+- Server remediation: `pip install pillow && systemctl restart fozpay-api`.
