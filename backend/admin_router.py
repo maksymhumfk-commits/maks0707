@@ -12,6 +12,7 @@ from typing import Optional
 
 import pyotp
 import qrcode
+import qrcode.image.svg
 from fastapi import APIRouter, HTTPException, Request, Body
 from pydantic import BaseModel
 
@@ -252,10 +253,15 @@ async def is_network_enabled(network_id) -> bool:
 # 2FA helpers
 # ---------------------------------------------------------------------------
 def _generate_qr_data_url(otpauth_uri: str) -> str:
-    img = qrcode.make(otpauth_uri)
     buf = io.BytesIO()
-    img.save(buf, format="PNG")
-    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+    try:
+        # Preferred: PNG via Pillow
+        qrcode.make(otpauth_uri).save(buf, format="PNG")
+        return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+    except Exception:
+        # Fallback without Pillow: pure-Python SVG (renders fine in <img src>)
+        qrcode.make(otpauth_uri, image_factory=qrcode.image.svg.SvgImage).save(buf)
+        return "data:image/svg+xml;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
 async def check_user_2fa(user: dict, otp: Optional[str]) -> bool:

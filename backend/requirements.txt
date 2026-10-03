@@ -31,4 +31,4 @@ bip-utils==2.12.2
 eth-account==0.11.3
 web3==6.20.4
 pyotp>=2.9.0
-qrcode>=7.4.2
+qrcode[pil]>=7.4.2
