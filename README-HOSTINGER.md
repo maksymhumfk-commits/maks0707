@@ -69,7 +69,7 @@ systemctl status mongod   # має бути active (running)
 
 ```bash
 cd /opt
-git clone https://github.com/psymaks249-debug/ddsfrwef.git fozpay
+git clone https://github.com/maksymhumfk-commits/maks0707.git fozpay
 cd fozpay
 ```
 
