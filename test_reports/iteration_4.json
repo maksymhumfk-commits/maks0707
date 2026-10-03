@@ -1,0 +1,35 @@
+{
+  "summary": "Tested new encrypted hot-wallet seed management (backend endpoints + Settings UI). All 8 backend pytest cases pass. Frontend flow verified end-to-end: admin login → Settings → Гарячий гаманець tab → Безпека сід-фрази card → invalid-mnemonic error toast → valid 12-word BIP-39 success toast + new EVM/TRON addresses displayed. DB verified to store only `mnemonic_enc` (Fernet 'gAAAA' token), no plaintext `mnemonic` field. Plaintext never leaks in any API response.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Settings → Гарячий гаманець → Безпека сід-фрази", "issues": ["After setting a user seed, the 'auto-generated' warning badge is correctly hidden; however the 'Зашифровано в БД ✓' badge keeps the same emerald tone — a subtle visual cue that the seed is now user-set (e.g. secondary badge 'Користувацька сід-фраза') would improve clarity. Minor cosmetic."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_seed_encryption.py",
+    "/app/test_reports/pytest/seed_encryption.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py is now ~2419 lines — recommend splitting hot-wallet, admin, auth routers into separate modules (maintainability).",
+    "hot_wallet_set_mnemonic resets in-memory _seed to None and calls ensure_seed() — thread-safe for current single-worker but if backend ever runs multiple workers this becomes racy; consider a per-worker reload signal.",
+    "seed-status endpoint returns env_override flag — good; consider logging an audit event each time set-mnemonic is called (currently a single logger.warning line) with admin user id."
+  ],
+  "updated_files": ["/app/backend/tests/test_seed_encryption.py"],
+  "success_rate": {"backend": "100% (8/8)", "frontend": "100%"},
+  "test_credentials": "Admin psymaks249@gmail.com / FozPay2025Admin! works.",
+  "seed_data_creation": "During testing the hot-wallet seed was replaced with a freshly generated 12-word BIP-39 mnemonic (test only — not a production seed). Current DB state: system/_id=wallet has mnemonic_enc set, auto_generated=false. Resulting hot-wallet EVM 0x4202baB36C02e4DcACCFFf22f6CBA8b5C8319c90 / TRON TXSrrLkpAmD1Be3CdojpZraYb9mGFxxqwk. No real funds involved. If main agent wants to revert to auto-generated, delete the `mnemonic_enc`+`auto_generated` fields from system/_id=wallet and restart backend.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend uses response envelope {status:true, data:{...}} for admin hot-wallet endpoints — unwrap `data` before asserting. Seed is now user-set (not auto). To re-test auto-generation path, clear system/_id=wallet document. MNEMONIC_ENC_KEY is in /app/backend/.env; losing it will make existing encrypted seeds unrecoverable. WALLET_MNEMONIC env is intentionally NOT set.",
+  "verified_features": [
+    "GET /api/admin/hot-wallet/seed-status: 401 unauth; 200 admin with all 7 expected keys; evm_address starts 0x, 42 chars; tron starts T; encrypted_at_rest=true",
+    "POST /api/admin/hot-wallet/set-mnemonic: 401 unauth; 400 on invalid BIP-39 with Ukrainian error 'Некоректна сід-фраза'; 200 on valid 12-word mnemonic returning new evm_address+tron_address; plaintext mnemonic absent from response body",
+    "DB: system/_id=wallet contains mnemonic_enc starting 'gAAAA' (Fernet), no plaintext 'mnemonic' key, auto_generated=false after set",
+    "GET /api/admin/hot-wallet still returns 200 for admin",
+    "UI: tab-hotwallet visible for admin; seed-security-card visible with 'Зашифровано в БД' badge; seed-set-open reveals seed-input + seed-save-btn; invalid phrase shows error toast; valid phrase shows success toast 'Сід збережено у зашифрованому вигляді' and updates on-page EVM/TRON addresses"
+  ]
+}

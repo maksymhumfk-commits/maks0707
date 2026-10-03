@@ -1,40 +1,38 @@
-# FozPay — PRD
+# FozPay — PRD / Project Memory
 
-## Original problem statement (iteration: GitHub import dyguop/klklk)
-Додати головну сторінку продукту; перемикач реєстрації клієнтів (email+Google) в адмінці;
-виправити графік балансу 1Д/1Т/1М/1Р; додати час до останніх операцій; прибрати приклад комісії;
-покращити рахунок на оплату (кнопка закриття + хеш транзакції, прибрати on-chain текст);
-перевірити перекази/автоконвертацію (Polygon USDT→USDC); комісії платформи = 0;
-строга валідація адреси по API; показувати повну адресу у заявках; повернення коштів із сумою;
-прибрати merchant-вкладку «Комісії»; інструкція публікації на Hostinger.
+## Original problem statement
+Скопіювати і розгорнути проєкт https://github.com/psymaks249-debug/ddsfrwef, написати інструкцію
+для публікації на Hostinger, і зробити так, щоб доступ до сервера/БД НЕ був критичним для
+гарячого гаманця — зашифрувати сід-фразу. Ключі: ALCHEMY_KEY, TRONGRID_KEY, ONEINCH_KEY.
 
 ## Architecture
-- Backend: FastAPI (server.py, admin_router.py, recovery.py, oneinch.py, hd_wallet.py, catalog.py, core.py, aml.py)
-- Frontend: React (CRACO) + Tailwind + shadcn/ui; pages under src/pages
-- DB: MongoDB (motor). HD wallet from WALLET_MNEMONIC (encrypted). Live chain: Alchemy/TronGrid; swap via 1inch.
+- Backend: FastAPI (Python), MongoDB (motor), HD-wallet (bip-utils), web3/1inch swaps, JWT + Google session auth.
+- Frontend: React (CRACO), Tailwind, admin + merchant cabinet.
+- Hot wallet = HD EVM address at index 0; per-user deposit addresses derived per index; deposits swept to hot wallet.
 
-## Done (2026-06)
-- NEW public LandingPage.js at '/' — purple/violet dark theme, real crypto icons, Ukrainian+EN.
-- Real crypto icons everywhere (common.js CoinIcon → cryptocurrency-icons CDN, fallback circle).
-- Admin registration toggle: platform_settings.registration_enabled; GET/PUT /api/admin/registration;
-  public /api/auth/registration-status; register() + google_session() gated; Login.js register form; Settings Users tab switch.
-- Balance chart ranges fixed: _balance_chart() + GET /api/me/chart?range=1Д/1Т/1М/1Р (24/7/30/12 buckets).
-- Dashboard: modern purple-gradient balance card; recent tx show date/time (fmtDateTime).
-- Checkout: removed on-chain explanation block; close button (X + bottom); tx hash + explorer link on paid.
-- Platform commissions set to 0 everywhere (DEFAULT_PLATFORM + existing DB doc).
-- Strict address validation: _validate_payout_address() in withdraw + create-output (rejects malformed/zero-padded; EVM checksummed).
-- Requests: payout table shows FULL address + copy button.
-- Recovery: optional amount input per finding (partial return via send_evm_amount).
-- Removed merchant 'Комісії' (tab-fees) from Settings.
-- README-HOSTINGER.md: full Ukrainian VPS deploy guide.
+## Seed-phrase security (this session)
+- Seed is stored ENCRYPTED in MongoDB (`system/_id=wallet`, field `mnemonic_enc`, Fernet/AES).
+- Decryption key `MNEMONIC_ENC_KEY` lives ONLY in `/app/backend/.env` → a DB dump alone cannot reveal the seed.
+- `WALLET_MNEMONIC` intentionally NOT set in .env (DB is source of truth).
+- New backend endpoints (admin only):
+  - `GET /api/admin/hot-wallet/seed-status` — shows configured/auto_generated/env_override/encrypted_at_rest + addresses; never returns the seed.
+  - `POST /api/admin/hot-wallet/set-mnemonic` — validates BIP-39, encrypts, stores in DB, reloads seed, returns new addresses (optional 2FA).
+- New frontend: Settings → Гарячий гаманець → "Безпека сід-фрази" card to enter/replace the seed securely.
+- `hd_wallet.is_valid_mnemonic()` added for BIP-39 validation.
 
-## Hot wallet / test addresses (preview)
-- EVM hot wallet / treasury (Polygon/ERC20/BSC/ARB): 0x7C594Ce4C977bbE53bf63cB2d11d70Df1f004D03
-- TRON hot wallet: TU1Ndfw4jsyELqHqkphj1qFWjSKwarPWi4
+## Config (preview env)
+- backend/.env: MONGO_URL, DB_NAME, JWT_SECRET, MNEMONIC_ENC_KEY, ADMIN_EMAIL, ADMIN_PASSWORD, FRONTEND_URL, ALCHEMY_KEY, TRONGRID_KEY, ONEINCH_KEY.
+- Admin: psymaks249@gmail.com / FozPay2025Admin!
 
-## Backlog / Not verifiable without real funds
-- Live on-chain deposit credit, 1inch auto-convert swap, real payouts (need funded hot wallet + gas).
-- P1: standardize API response envelope; split large server.py.
+## Deployment
+- `/app/README-HOSTINGER.md` — full Ukrainian VPS guide for domain **fozpay.online** (Nginx + HTTPS + systemd + MongoDB), with the encrypted-seed workflow (seed entered in admin UI after deploy, not in .env).
 
-## Credentials
-- Admin: psymaks249@gmail.com / FozPay2025Admin! (see /app/memory/test_credentials.md)
+## Status (2026-10-03)
+- Project cloned into /app, deps installed, backend + frontend running.
+- Seed encryption feature implemented & tested: 100% backend (8/8), 100% frontend.
+- Hot-wallet seed currently auto-generated (encrypted) — user to replace with own seed via admin UI.
+
+## Backlog / Next
+- Audit log for set-mnemonic (admin id + timestamp).
+- Optional: split server.py routers into modules (maintainability).
+- Secondary badge "Користувацька сід-фраза" after user sets seed (cosmetic).
