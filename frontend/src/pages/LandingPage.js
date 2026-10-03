@@ -139,9 +139,7 @@ const CODE = `curl -X POST https://fozpay.online/api/v1/private/create-output \\
 function Brand({ dark }) {
   return (
     <div className="flex items-center gap-2.5" data-testid="landing-logo">
-      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0D5C46] text-white shadow-md shadow-emerald-900/20">
-        <span className="font-display text-lg font-extrabold">F</span>
-      </div>
+      <img src="/fozpay-mark.png" alt="FozPay" className="h-9 w-9 object-contain" />
       <span className="font-display text-xl font-extrabold tracking-tight">
         <span className={dark ? "text-white" : "text-slate-900"}>Foz</span>
         <span className="text-[#0D5C46]">Pay</span>
@@ -222,7 +220,7 @@ export default function LandingPage() {
               <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-20px_rgba(13,92,70,0.25)]">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0D5C46] font-display font-bold text-white">F</div>
+                    <img src="/fozpay-mark.png" alt="F" className="h-9 w-9 object-contain" />
                     <div><div className="text-sm font-semibold text-slate-900">FozPay Checkout</div><div className="text-[11px] text-slate-400">invoice #A1B2C3</div></div>
                   </div>
                   <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">Live</span>

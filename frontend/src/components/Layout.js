@@ -22,9 +22,7 @@ const NAV = [
 export function Logo({ size = "text-xl" }) {
   return (
     <div className="flex items-center gap-2.5" data-testid="foz-logo">
-      <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-[#0D5C46] font-extrabold text-white shadow-md shadow-emerald-900/20">
-        <span className="font-display">F</span>
-      </div>
+      <img src="/fozpay-mark.png" alt="FozPay" className="h-9 w-9 object-contain" />
       <span className={`${size} font-extrabold tracking-tight font-display`}>
         <span className="text-slate-900">Foz</span><span className="foz-grad-text">Pay</span>
       </span>
