@@ -1,132 +1,149 @@
 {
-  "project_name": "FozPay Landing Page",
-  "theme_decision": "Cyber-Precision Swiss Dark (Obsidian #090B0E + Deep Slate-Zinc + Electric Emerald/Cyan #00F5A0 / #00D2FF & Amber Accents). Explicitly breaks away from the internal cabinet's purple/fuchsia glassmorphic theme as requested by the user, adopting an ultra-clean, high-velocity institutional crypto payment terminal aesthetic.",
-  "language": "uk",
-  "supported_languages": ["uk", "en"],
-  "design_archetype": "The Swiss Neo-Terminal (Mix of Swiss International Poster typography, High-precision Trading Terminal dense data telemetry, and Tactical Cryptographic Security)",
-  "typography": {
-    "font_family_heading": "Sora, -apple-system, sans-serif",
-    "font_family_body": "Manrope, -apple-system, sans-serif",
-    "font_family_mono": "JetBrains Mono, monospace",
-    "hierarchy": {
-      "hero_h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08]",
-      "section_h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white",
-      "sub_h3": "text-xl sm:text-2xl font-semibold text-slate-100",
-      "card_h4": "text-lg sm:text-xl font-semibold text-slate-200",
-      "body": "text-base leading-relaxed text-slate-400",
-      "small_label": "text-xs font-mono uppercase tracking-[0.2em] text-emerald-400"
-    }
-  },
-  "color_palette": {
-    "background_primary": "#07090e",
-    "background_secondary": "#0d1117",
-    "background_card": "#121721",
-    "surface_border": "rgba(255, 255, 255, 0.08)",
-    "surface_border_hover": "rgba(0, 245, 160, 0.3)",
-    "brand_primary": "#00F5A0",
-    "brand_primary_glow": "rgba(0, 245, 160, 0.15)",
-    "brand_secondary": "#00D2FF",
-    "brand_accent": "#F59E0B",
-    "text_primary": "#FFFFFF",
-    "text_secondary": "#94A3B8",
-    "text_muted": "#64748B",
-    "destructive": "#EF4444"
-  },
-  "visual_enhancers": {
-    "mesh_gradient": "radial-gradient(circle at 50% 0%, rgba(0, 245, 160, 0.12) 0%, rgba(0, 210, 255, 0.05) 30%, transparent 70%)",
-    "dot_matrix": "radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)",
-    "glass_terminal": "backdrop-blur-xl bg-[#0d1117]/85 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)]",
-    "badge_glow": "shadow-[0_0_15px_rgba(0,245,160,0.3)] border border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-  },
-  "image_urls": {
-    "hero_crypto_tokens": {
-      "image_url": "https://images.unsplash.com/photo-1651054558996-03455fe2702f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwyfHxjcnlwdG8lMjB0ZWNobm9sb2d5JTIwYWJzdHJhY3R8ZW58MHx8fHwxNzkxMDIxMjk3fDA&ixlib=rb-4.1.0&q=85",
-      "description": "3D render of cryptocurrency tokens and nodes in dark studio",
-      "placement": "Hero section dynamic interactive preview card / floating asset"
-    },
-    "crypto_hardware_node": {
-      "image_url": "https://images.unsplash.com/photo-1641580529558-a96cf6efbc72?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwxfHxjcnlwdG8lMjB0ZWNobm9sb2d5JTIwYWJzdHJhY3R8ZW58MHx8fHwxNzkxMDIxMjk3fDA&ixlib=rb-4.1.0&q=85",
-      "description": "Microchip motherboard and bitcoin hardware circuit representing secure cold/hot wallet infrastructure",
-      "placement": "Security and Hot-Wallet architecture feature showcase"
-    },
-    "crypto_payment_terminal": {
-      "image_url": "https://images.unsplash.com/photo-1622630998477-20aa696ecb05?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwyfHxjcnlwdG9jdXJyZW5jeSUyMHBheW1lbnQlMjBmaW50ZWNofGVufDB8fHx8MTc5MTAyMTMwMHww&ixlib=rb-4.1.0&q=85",
-      "description": "Minimalist metallic crypto badge on keyboard terminal",
-      "placement": "Merchant API integration section"
-    }
-  },
-  "sections_breakdown": [
-    {
-      "id": "navbar",
-      "description": "Sticky high-precision nav with FozPay brand mark (glowing emerald bolt/hex badge), navigation links (Функціонал, Валюти, API, Як працює, Безпека), language switch (UA/EN), and action buttons ('Увійти' to /login, 'Підключити мерчанта' to /login). Backdrop-blur-xl with border-b border-white/10.",
-      "test_id": "navbar-main"
-    },
-    {
-      "id": "hero",
-      "description": "Impactful asymmetric hero. Eyebrow badge 'Крипто-еквайринг нового покоління • Без KYC для транзиту'. Headliner 'Приймайте платежі у крипті миттєво та без блокувань'. Interactive live payout/conversion simulation widget showing real-time network fee, instant checkout preview, and CTAs ('Створити акаунт' -> /login, 'Документація API' -> /docs). Live network status ticker.",
-      "test_id": "hero-section"
-    },
-    {
-      "id": "supported_currencies_and_networks",
-      "description": "High-density multi-coin ticker and interactive network selector. Showcases USDT, USDC, BTC, ETH, BNB, TRX, SOL, LTC across ERC20, BEP20, TRC20, Polygon, Arbitrum, Solana, Bitcoin, Litecoin. Real-time fee comparison cards with zero-charge transit highlights.",
-      "test_id": "currencies-networks-section"
-    },
-    {
-      "id": "features_bento",
-      "description": "Tetris Bento Grid of core advantages: 1. Instant Crypto Invoicing (one-click QR checkout, auto-expiry, webhook dispatch); 2. Auto-conversion upon withdrawal (protect revenue from volatility into stablecoins USDT/USDC); 3. High-Security Hot Wallet with multi-signature cold sweeps; 4. Zero KYC verification for swift transit flows; 5. Ultra-low merchant processing fee from 0.4%.",
-      "test_id": "features-grid-section"
-    },
-    {
-      "id": "how_it_works",
-      "description": "Step-by-step interactive workflow pipeline: Step 1 'Створення інвойсу / Реєстрація' -> Step 2 'Вибір валюти клієнтом та оплата через QR' -> Step 3 'Миттєве зарахування та авто-конвертація' -> Step 4 'Автоматичний вивід через REST API або кабінет'.",
-      "test_id": "how-it-works-section"
-    },
-    {
-      "id": "api_terminal_teaser",
-      "description": "Dark terminal code preview with real curl & JSON response snippet for POST /v1/invoices, copy-to-clipboard functionality, dynamic webhook status simulation, and direct link to developer portal /docs.",
-      "test_id": "api-teaser-section"
-    },
-    {
-      "id": "stats_and_trust",
-      "description": "Telemetry metrics: 99.98% Uptime SLA, < 1.2s Webhook delivery latency, 8+ Blockchains integrated, 0.4% Starting rate, $0 KYC hold for transit payments.",
-      "test_id": "stats-trust-section"
-    },
-    {
-      "id": "faq_accordion",
-      "description": "Quick-fire answers for merchants: Чи потрібен паспорт для початку? Як працює автоконвертація? Які комісії мереж? Чи можна інтегрувати в Telegram-бота або інтернет-магазин?",
-      "test_id": "faq-section"
-    },
-    {
-      "id": "cta_banner",
-      "description": "High-conversion banner with glowing neon border: 'Готові приймати криптоплатежі вже сьогодні? Підключення за 5 хвилин без очікування перевірок'. CTA button 'Почати безкоштовно'.",
-      "test_id": "cta-banner-section"
-    },
-    {
-      "id": "footer",
-      "description": "Deep obsidian footer with status indicator 'Усі мережі працюють у штатному режимі', copyright, fast links to /docs, /login, /contacts, Telegram support, and legal disclaimers.",
-      "test_id": "footer-main"
-    }
+  "project_name": "FozPay - Modern Self-Hosted Crypto Payment Gateway",
+  "theme": "Light Fintech Architectural (Swiss Precision & Deep Forest Accent)",
+  "emotional_archetype": "High-Trust Financial Infrastructure (Performance & Precision)",
+  "anti_ai_rules": [
+    "STRICTLY FORBIDDEN: Purple/violet-to-fuchsia gradients, purple-on-white default SaaS aesthetics.",
+    "STRICTLY FORBIDDEN: Default system fonts or plain Inter for display headings.",
+    "STRICTLY FORBIDDEN: Fully transparent background headers or dropdown menus without backdrop blur.",
+    "NO generic centered hero layouts with floating gradient cards.",
+    "NO dark-mode default on Landing page — Landing page MUST be light theme (#F8FAFC / #FFFFFF background)."
   ],
-  "routing_instructions": {
-    "file_to_create": "/app/frontend/src/pages/LandingPage.js",
-    "route_in_App_js": "Replace <Route path=\"/\" element={<Navigate to=\"/dashboard\" replace />} /> with <Route path=\"/\" element={<LandingPage />} /> in /app/frontend/src/App.js. Retain path=\"*\" fallback to / or dashboard as appropriate.",
-    "login_route": "/login",
-    "api_docs_route": "/docs"
+  "typography": {
+    "google_fonts_import": "@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');",
+    "font_families": {
+      "heading": "'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "body": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "mono": "'JetBrains Mono', monospace"
+    },
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-snug",
+      "h3": "text-xl sm:text-2xl font-bold tracking-tight",
+      "h4": "text-lg sm:text-xl font-semibold",
+      "body_large": "text-lg leading-relaxed text-slate-600",
+      "body": "text-base leading-normal text-slate-700",
+      "caption": "text-sm text-slate-500 font-medium",
+      "code": "font-mono text-xs tracking-wide"
+    }
   },
-  "component_styling_details": {
-    "buttons": "Pill or rounded-xl buttons with font-semibold px-6 py-3 transition-transform duration-150 active:scale-95 text-sm sm:text-base. Primary: bg-emerald-400 text-slate-950 hover:bg-emerald-300 shadow-[0_0_20px_rgba(0,245,160,0.35)]. Secondary: bg-white/10 text-white hover:bg-white/15 border border-white/15.",
-    "cards": "bg-[#0f141d]/90 border border-white/10 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/40 transition-colors duration-200",
-    "code_box": "bg-[#090c12] border border-white/10 rounded-xl p-4 font-mono text-xs sm:text-sm text-emerald-400 leading-relaxed overflow-x-auto",
-    "crypto_badges": "flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-emerald-400/50 hover:bg-emerald-500/10 transition-colors cursor-pointer text-xs font-mono font-medium text-slate-200"
+  "colors": {
+    "css_variables": {
+      "--background": "210 40% 98%",
+      "--foreground": "222 47% 11%",
+      "--card": "0 0% 100%",
+      "--card-foreground": "222 47% 11%",
+      "--popover": "0 0% 100%",
+      "--popover-foreground": "222 47% 11%",
+      "--primary": "162 84% 24%",
+      "--primary-foreground": "162 20% 98%",
+      "--primary-hover": "162 84% 18%",
+      "--secondary": "210 20% 94%",
+      "--secondary-foreground": "222 47% 11%",
+      "--muted": "210 20% 96%",
+      "--muted-foreground": "215 16% 47%",
+      "--accent": "158 64% 45%",
+      "--accent-foreground": "0 0% 100%",
+      "--destructive": "0 84% 60%",
+      "--destructive-foreground": "0 0% 98%",
+      "--border": "214 32% 91%",
+      "--input": "214 32% 91%",
+      "--ring": "162 84% 24%",
+      "--radius": "0.5rem"
+    },
+    "palette": {
+      "background": "#F8FAFC",
+      "surface": "#FFFFFF",
+      "surface_subtle": "#F1F5F9",
+      "text_primary": "#0F172A",
+      "text_secondary": "#475569",
+      "text_muted": "#64748B",
+      "brand_primary": "#0D5C46",
+      "brand_primary_dark": "#083C2E",
+      "brand_accent": "#10B981",
+      "brand_accent_soft": "#ECFDF5",
+      "border_default": "#E2E8F0",
+      "border_active": "#CBD5E1",
+      "badge_neutral": "#F1F5F9",
+      "status_success": "#059669",
+      "status_warning": "#D97706",
+      "status_error": "#DC2626"
+    }
   },
-  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
-    "Never use generic centered layouts or AI slop purple gradients for this landing page. The user strictly specified an alternative modern style (Cyber-Precision Swiss Dark).",
-    "Isolate the Landing Page styles from the cabinet's global .bg-white and purple overrides by wrapping the LandingPage in a self-contained container (.foz-landing-root) with dark background (#07090e) and explicit text colors.",
-    "All interactive elements (buttons, inputs, links, tabs) MUST have unique data-testid attributes.",
-    "Provide rich Ukrainian text as primary language, and allow switching to English dynamically or seamlessly via a toggle.",
-    "Ensure responsiveness on mobile, tablet, and desktop (max-width constraints, responsive grid columns).",
-    "Include real coin icons or clean SVG emblems for USDT, USDC, BTC, ETH, BNB, TRX, SOL, LTC.",
-    "Do not use generic placeholder images: use the curated Unsplash photos defined in image_urls.",
-    "Integrate Lucide icons (Zap, ShieldCheck, ArrowRight, RefreshCw, Terminal, Layers, CheckCircle2, Lock, Cpu, Globe, ExternalLink) cleanly."
+  "button_system": {
+    "module_style": "High-density tactile rectangular buttons with 1px border highlights, active scale compression (active:scale-[0.98]), smooth transition: bg 150ms ease, border 150ms ease.",
+    "variants": {
+      "primary": "bg-[#0D5C46] hover:bg-[#083C2E] text-white font-semibold px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-200 active:scale-[0.98]",
+      "secondary": "bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-semibold px-5 py-2.5 rounded-lg shadow-sm hover:border-slate-300 transition-all duration-200 active:scale-[0.98]",
+      "outline": "bg-transparent hover:bg-slate-100/80 text-slate-700 border border-slate-300 font-medium px-4 py-2 rounded-lg transition-colors",
+      "ghost": "bg-transparent hover:bg-slate-100 text-slate-700 font-medium px-3 py-1.5 rounded-md transition-colors"
+    }
+  },
+  "landing_page": {
+    "hero_headline_uk": "Автономний крипто-еквайринг для вашого бізнесу",
+    "hero_subhead_uk": "Прямі розрахунки на ваші гаманці без посередників, прихованих комісій та затримок. Повний контроль над платежами в один клік.",
+    "hero_headline_en": "Autonomous Crypto Payment Gateway for Your Business",
+    "hero_subhead_en": "Direct settlements to your own wallets with zero intermediaries, hidden fees, or delays. Full payment sovereignity.",
+    "layout_structure": [
+      {
+        "section": "Header Nav",
+        "style": "Sticky with backdrop-blur-md bg-white/85 border-b border-slate-200/80 z-50",
+        "elements": "Logo with custom symbol + FozPay typography, nav links (Функції, Монети, Документація, Тарифи), Language toggle (UA/EN), CTA button (Кабінет / Увійти)"
+      },
+      {
+        "section": "Hero",
+        "style": "Light grid texture background with radial gradient mask. Two-column asymmetrical layout.",
+        "left_column": "Badge 'Self-Hosted & Direct Settlement', H1 Headline, Subhead, Primary Action CTA ('Підключити еквайринг'), Secondary CTA ('API Документація')",
+        "right_column": "Interactive Crypto Checkout & Live Payment Terminal Preview widget showing real-time transaction status (BTC, ETH, USDT, SOL)."
+      },
+      {
+        "section": "Supported Coins Grid",
+        "style": "Swiss grid border-collapse style with crisp 1px borders.",
+        "coins": ["BTC", "ETH", "USDT", "USDC", "BNB", "TRX", "SOL", "LTC"]
+      },
+      {
+        "section": "Feature Highlights (The Bento Tetris)",
+        "style": "Asymmetric 12-column bento layout on light cards with subtle emerald hover borders.",
+        "features": [
+          "Direct Non-Custodial Transit",
+          "Automated Multi-Network Webhooks",
+          "Instant Auto-Swap & Conversion",
+          "Built-in Merchant API & Checkout Widget"
+        ]
+      },
+      {
+        "section": "Live Payment Terminal Sandbox",
+        "style": "Interactive tabbed widget showcasing how easily merchants integrate FozPay via REST API or Ready-made Checkout."
+      },
+      {
+        "section": "Footer",
+        "style": "Deep contrast slate-900 background with high-legibility links, system status badge, and legal copyright."
+      }
+    ]
+  },
+  "dashboard_cabinet": {
+    "overview": "Refreshed clean light-mode dashboard with crisp metric cards, custom AreaChart styling (emerald gradient fill under line), period selectors, structured transaction filter tables, and clear network status badges.",
+    "components": {
+      "metric_cards": "White background, border border-slate-200, rounded-xl p-5 shadow-sm hover:border-emerald-300 transition-colors",
+      "charts": "Recharts AreaChart with stroke='#10B981' and linearGradient fill (emerald to white transparent), high-contrast tooltips.",
+      "tables": "Dense, crisp typography with slate-50 header background, status badges (Completed: green, Pending: yellow, Failed: red), full search & period filtering.",
+      "wallet_tabs": "Tabs with clear active highlight state, clean modal popups for Deposit/Withdraw/Exchange."
+    }
+  },
+  "media": {
+    "hero_image_url": "https://images.unsplash.com/photo-1645731504331-72636399448e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHw0fHxjcnlwdG9jdXJyZW5jeSUyMHBheW1lbnRzJTIwcHJvY2Vzc2luZyUyMHNvZnR3YXJlJTIwbW9kZXJuJTIwZmludGVjaCUyMGxpZ2h0JTIwdGhlbWUlMjBoZXJvfGVufDB8fHx8MTc5MTA0NDYzNHww&ixlib=rb-4.1.0&q=85",
+    "crypto_coins_url": "https://images.pexels.com/photos/19840560/pexels-photo-19840560.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  },
+  "testing_and_accessibility": {
+    "test_ids": "MUST maintain all existing data-testid attributes across all .js page files (e.g. data-testid='login-submit-button', data-testid='dashboard-balance-card', etc.).",
+    "contrast": "All body text must achieve WCAG AA contrast against #F8FAFC and #FFFFFF (slate-700 / slate-900)."
+  },
+  "instructions_to_main_agent": [
+    "Import Google Fonts in src/index.css.",
+    "Update Tailwind / CSS variables in src/index.css to match the Deep Emerald & Slate light palette.",
+    "Apply custom button classes and font families to LandingPage.js, Login.js, Dashboard.js, Wallet.js, Requests.js, Settings.js, ApiDocs.js.",
+    "Replace the old tagline in LandingPage.js with 'Автономний крипто-еквайринг для вашого бізнесу'.",
+    "Ensure header nav has backdrop blur and non-transparent background.",
+    "Preserve all existing data-testid attributes and API functionality."
   ]
 }

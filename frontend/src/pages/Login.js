@@ -66,8 +66,8 @@ export default function Login() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
       {/* floating orbs */}
-      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-violet-500/30 blur-3xl foz-float" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-fuchsia-500/25 blur-3xl foz-float" style={{ animationDelay: "1.5s" }} />
+      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-emerald-400/20 blur-3xl foz-float" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-emerald-600/15 blur-3xl foz-float" style={{ animationDelay: "1.5s" }} />
 
       <div className="absolute right-5 top-5">
         <button onClick={() => setLang(lang === "uk" ? "en" : "uk")} data-testid="login-lang"
@@ -101,7 +101,7 @@ export default function Login() {
               <Input data-testid="login-otp" value={otp} onChange={(e) => setOtp(e.target.value)} className="mt-1 rounded-xl tracking-widest text-center" placeholder="123 456" inputMode="numeric" maxLength={6} autoFocus />
             </div>
           )}
-          <Button data-testid="login-submit" disabled={busy} className="w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 py-6 text-base font-bold shadow-lg shadow-fuchsia-500/30 hover:opacity-95">
+          <Button data-testid="login-submit" disabled={busy} className="btn-foz w-full rounded-full py-6 text-base font-bold">
             {busy ? "..." : mode === "login" ? t("login_btn") : t("register_btn")}
           </Button>
         </form>
@@ -117,7 +117,7 @@ export default function Login() {
         <div className="mt-6 text-center text-xs text-slate-500">
           {regEnabled ? (
             <button type="button" data-testid="toggle-auth-mode" onClick={() => setMode(mode === "login" ? "register" : "login")}
-              className="font-semibold text-violet-600 hover:underline">
+              className="font-semibold text-[#0D5C46] hover:underline">
               {mode === "login" ? "Немає акаунта? Зареєструватися" : "Вже є акаунт? Увійти"}
             </button>
           ) : (

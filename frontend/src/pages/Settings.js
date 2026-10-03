@@ -77,8 +77,8 @@ export default function Settings() {
             <TabsTrigger value="security" data-testid="tab-security"><Shield className="mr-1 h-4 w-4" />Безпека</TabsTrigger>
             {isAdmin && <TabsTrigger value="platform" data-testid="tab-platform" className="bg-emerald-50 data-[state=active]:bg-emerald-100"><Coins className="mr-1 h-4 w-4" />Платформа</TabsTrigger>}
             {isAdmin && <TabsTrigger value="networks" data-testid="tab-networks" className="bg-emerald-50 data-[state=active]:bg-emerald-100"><NetIcon className="mr-1 h-4 w-4" />Мережі</TabsTrigger>}
-            {isAdmin && <TabsTrigger value="users" data-testid="tab-users" className="bg-violet-50 data-[state=active]:bg-violet-100"><UsersIcon className="mr-1 h-4 w-4" />Користувачі</TabsTrigger>}
-            {isAdmin && <TabsTrigger value="hotwallet" data-testid="tab-hotwallet" className="bg-fuchsia-50 data-[state=active]:bg-fuchsia-100"><Flame className="mr-1 h-4 w-4" />Гарячий гаманець</TabsTrigger>}
+            {isAdmin && <TabsTrigger value="users" data-testid="tab-users" className="bg-emerald-50 data-[state=active]:bg-emerald-100"><UsersIcon className="mr-1 h-4 w-4" />Користувачі</TabsTrigger>}
+            {isAdmin && <TabsTrigger value="hotwallet" data-testid="tab-hotwallet" className="bg-emerald-50 data-[state=active]:bg-emerald-100"><Flame className="mr-1 h-4 w-4" />Гарячий гаманець</TabsTrigger>}
           </TabsList>
 
           <TabsContent value="profile" className="pt-6">
@@ -708,8 +708,8 @@ function UsersTab({ admin }) {
 
   return (
     <div className="space-y-5 max-w-4xl">
-      <div className="rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50/70 to-transparent p-5">
-        <div className="text-sm text-violet-800 font-semibold mb-1">👥 Керування користувачами</div>
+      <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/70 to-transparent p-5">
+        <div className="text-sm text-emerald-800 font-semibold mb-1">👥 Керування користувачами</div>
         <div className="text-xs text-slate-600">Тут ви створюєте акаунти користувачів та змінюєте їхні паролі.</div>
       </div>
 
@@ -730,7 +730,7 @@ function UsersTab({ admin }) {
           <div><Label>Ім'я</Label><Input data-testid="new-user-name" value={name} onChange={(e) => setName(e.target.value)} className="rounded-xl mt-1" placeholder="Ivan" /></div>
           <div><Label>Email</Label><Input data-testid="new-user-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-xl mt-1" placeholder="user@mail.com" /></div>
           <div><Label>Пароль</Label><Input data-testid="new-user-password" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-xl mt-1" placeholder="••••••" /></div>
-          <div className="flex items-end"><Button data-testid="create-user-btn" onClick={create} disabled={!email || !password} className="w-full rounded-full bg-violet-600 hover:bg-violet-700"><Plus className="mr-1 h-4 w-4" />Створити</Button></div>
+          <div className="flex items-end"><Button data-testid="create-user-btn" onClick={create} disabled={!email || !password} className="w-full rounded-full bg-emerald-600 hover:bg-emerald-700"><Plus className="mr-1 h-4 w-4" />Створити</Button></div>
         </div>
       </div>
 
@@ -742,7 +742,7 @@ function UsersTab({ admin }) {
               <div className="flex-1 min-w-[180px]">
                 <div className="font-semibold text-slate-900 flex items-center gap-2">
                   {u.name || u.email}
-                  {u.role === "admin" && <Badge className="bg-violet-600">admin</Badge>}
+                  {u.role === "admin" && <Badge className="bg-emerald-600">admin</Badge>}
                 </div>
                 <div className="text-xs text-slate-500">{u.email} · {u.auth_provider || "password"}</div>
                 <div data-testid={`user-balance-${u.user_id}`} className="mt-1 text-xs font-semibold text-emerald-700">
@@ -754,7 +754,7 @@ function UsersTab({ admin }) {
               </div>
               <div className="flex items-center gap-2">
                 <Input data-testid={`pw-input-${u.user_id}`} value={pwEdit[u.user_id] || ""} onChange={(e) => setPwEdit({ ...pwEdit, [u.user_id]: e.target.value })} placeholder="Новий пароль" className="h-9 w-40 rounded-lg" />
-                <Button data-testid={`pw-save-${u.user_id}`} size="sm" onClick={() => changePw(u.user_id)} disabled={!pwEdit[u.user_id]} className="rounded-full bg-violet-600 hover:bg-violet-700"><KeyRound className="mr-1 h-3.5 w-3.5" />Змінити</Button>
+                <Button data-testid={`pw-save-${u.user_id}`} size="sm" onClick={() => changePw(u.user_id)} disabled={!pwEdit[u.user_id]} className="rounded-full bg-emerald-600 hover:bg-emerald-700"><KeyRound className="mr-1 h-3.5 w-3.5" />Змінити</Button>
                 {u.user_id !== admin?.user_id && (
                   <Button data-testid={`user-del-${u.user_id}`} size="icon" variant="ghost" onClick={() => del(u.user_id)} className="text-rose-500"><Trash2 className="h-4 w-4" /></Button>
                 )}
@@ -821,8 +821,8 @@ function HotWalletTab({ user }) {
 
   return (
     <div className="space-y-5 max-w-4xl">
-      <div className="rounded-2xl border border-fuchsia-100 bg-gradient-to-br from-fuchsia-50/70 via-violet-50/50 to-transparent p-5">
-        <div className="flex items-center gap-2 text-sm text-fuchsia-800 font-semibold mb-1"><Flame className="h-4 w-4" /> Гарячий гаманець платформи</div>
+      <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/70 via-emerald-50/50 to-transparent p-5">
+        <div className="flex items-center gap-2 text-sm text-emerald-800 font-semibold mb-1"><Flame className="h-4 w-4" /> Гарячий гаманець платформи</div>
         <div className="text-xs text-slate-600">Усі депозити автоматично зводяться сюди. Звідси проводяться виводи та своп. Комісії сервісу теж лишаються тут — ви можете вивести будь-яку валюту на потрібну адресу.</div>
       </div>
 
@@ -905,8 +905,8 @@ function HotWalletTab({ user }) {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-fuchsia-100 p-5 space-y-3">
-            <div className="text-lg font-bold text-slate-900 flex items-center gap-2"><Send className="h-4 w-4 text-fuchsia-600" />Вивести з гарячого гаманця</div>
+          <div className="rounded-2xl border border-emerald-100 p-5 space-y-3">
+            <div className="text-lg font-bold text-slate-900 flex items-center gap-2"><Send className="h-4 w-4 text-emerald-600" />Вивести з гарячого гаманця</div>
             <div className="grid gap-3 sm:grid-cols-2">
               <div><Label>Мережа</Label>
                 <Select value={form.chain} onValueChange={(v) => setForm({ ...form, chain: v })}>
@@ -932,7 +932,7 @@ function HotWalletTab({ user }) {
                 <Input data-testid="hot-otp" value={form.otp} onChange={(e) => setForm({ ...form, otp: e.target.value })} className="rounded-xl mt-1 max-w-xs" placeholder="123 456" inputMode="numeric" maxLength={6} /></div>
             )}
             <div className="flex justify-end">
-              <Button data-testid="hot-withdraw-btn" onClick={withdraw} disabled={busy || !form.to_address || !form.amount} className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 hover:opacity-95">
+              <Button data-testid="hot-withdraw-btn" onClick={withdraw} disabled={busy || !form.to_address || !form.amount} className="rounded-full bg-gradient-to-r from-emerald-600 to-emerald-600 px-8 hover:opacity-95">
                 {busy ? "Відправка…" : "Вивести кошти"}
               </Button>
             </div>

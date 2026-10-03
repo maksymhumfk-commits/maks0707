@@ -22,7 +22,7 @@ const NAV = [
 export function Logo({ size = "text-xl" }) {
   return (
     <div className="flex items-center gap-2.5" data-testid="foz-logo">
-      <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-purple-600 font-extrabold text-white shadow-lg shadow-fuchsia-500/30">
+      <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-[#0D5C46] font-extrabold text-white shadow-md shadow-emerald-900/20">
         <span className="font-display">F</span>
       </div>
       <span className={`${size} font-extrabold tracking-tight font-display`}>
@@ -57,7 +57,7 @@ export default function Layout({ children }) {
           <nav className="hidden items-center gap-6 md:flex">
             {topLinks.map((l) => (
               <NavLink key={l.key} to={l.path} data-testid={`top-${l.key}`}
-                className="text-sm font-semibold text-slate-600 transition-colors hover:text-violet-600">
+                className="text-sm font-semibold text-slate-600 transition-colors hover:text-[#0D5C46]">
                 {t(l.key)}
               </NavLink>
             ))}
@@ -65,7 +65,7 @@ export default function Layout({ children }) {
         </div>
         <div className="flex items-center gap-3">
           {user?.role === "admin" && (
-            <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-1 text-xs font-bold text-white shadow">
+            <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-[#0D5C46] px-3 py-1 text-xs font-bold text-white shadow">
               ADMIN
             </span>
           )}
@@ -82,7 +82,7 @@ export default function Layout({ children }) {
           </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button data-testid="user-menu" className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 text-sm font-bold text-white shadow-lg shadow-fuchsia-500/30">
+              <button data-testid="user-menu" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0D5C46] text-sm font-bold text-white shadow-md shadow-emerald-900/20">
                 {initials}
               </button>
             </DropdownMenuTrigger>
@@ -97,8 +97,13 @@ export default function Layout({ children }) {
       </header>
 
       <div className="flex">
+        {/* Mobile backdrop */}
+        {open && (
+          <div className="fixed inset-0 top-16 z-10 bg-slate-900/30 backdrop-blur-sm lg:hidden"
+            data-testid="sidebar-backdrop" onClick={() => setOpen(false)} />
+        )}
         {/* Sidebar */}
-        <aside className={`fixed inset-y-16 left-0 z-20 w-64 transform border-r border-white/40 glass p-4 transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <aside className={`fixed inset-y-16 left-0 z-20 w-64 transform overflow-y-auto border-r border-white/40 glass p-4 transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
           <nav className="space-y-1.5">
             {NAV.map((n) => {
               const Icon = n.icon;
@@ -107,7 +112,7 @@ export default function Layout({ children }) {
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
                       isActive
-                        ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-fuchsia-500/25"
+                        ? "bg-[#0D5C46] text-white shadow-md shadow-emerald-900/20"
                         : "text-slate-600 hover:bg-white/60"
                     }`}>
                   <Icon className="h-5 w-5" /> {t(n.key)}
@@ -115,7 +120,7 @@ export default function Layout({ children }) {
               );
             })}
           </nav>
-          <div className="mt-6 rounded-2xl glass-dark p-4 text-xs text-violet-100">
+          <div className="mt-6 rounded-2xl glass-dark p-4 text-xs text-emerald-100">
             <div className="font-bold text-white">FozPay Gateway</div>
             <div className="mt-1 opacity-80">Прийом · Обмін · Вивід криптовалют через гарячий гаманець.</div>
           </div>

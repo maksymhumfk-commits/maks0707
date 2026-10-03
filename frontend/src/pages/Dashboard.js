@@ -42,17 +42,17 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 oki-fade-up">
       {/* Balance card */}
-      <div className="rounded-3xl bg-gradient-to-br from-violet-600 via-violet-700 to-fuchsia-700 p-6 shadow-lg shadow-violet-500/25 sm:p-8 text-white">
+      <div className="rounded-3xl bg-[#0D5C46] p-6 shadow-lg shadow-emerald-900/20 sm:p-8 text-white">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <div className="flex items-center gap-2 text-sm font-medium text-violet-100">
+            <div className="flex items-center gap-2 text-sm font-medium text-emerald-100">
               {t("total_balance")}
               <button
                 type="button"
                 data-testid="toggle-balance"
                 onClick={() => setHideBalance((v) => !v)}
                 aria-label={hideBalance ? "Показати баланс" : "Приховати баланс"}
-                className="rounded-full p-1 text-violet-200 transition-colors hover:bg-white/15 hover:text-white"
+                className="rounded-full p-1 text-emerald-200 transition-colors hover:bg-white/15 hover:text-white"
               >
                 {hideBalance ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
@@ -60,7 +60,7 @@ export default function Dashboard() {
             <div data-testid="total-balance" className="mt-1 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
               {hideBalance ? "••••••" : fmtUsd(data.total_usd)}
             </div>
-            <div className="mt-1 text-sm text-violet-200">{t("available")} • {hideBalance ? "••••••" : fmtUsd(data.available_usd)}</div>
+            <div className="mt-1 text-sm text-emerald-200">{t("available")} • {hideBalance ? "••••••" : fmtUsd(data.available_usd)}</div>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button data-testid="action-receive" onClick={() => navigate("/wallet")} className="rounded-full bg-white text-slate-800 border border-slate-200 shadow-sm hover:bg-slate-50">
@@ -79,7 +79,7 @@ export default function Dashboard() {
             <div key={p.iso} data-testid={`ticker-${p.iso}`} className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5">
               <CoinIcon iso={p.iso} size={22} />
               <span className="text-sm font-semibold text-white">{p.iso}</span>
-              <span className="text-sm text-violet-100">{fmtUsd(p.price)}</span>
+              <span className="text-sm text-emerald-100">{fmtUsd(p.price)}</span>
               <span className={`text-xs font-semibold ${p.change >= 0 ? "text-emerald-300" : "text-rose-300"}`}>
                 {p.change >= 0 ? "+" : ""}{p.change}%
               </span>
@@ -109,15 +109,15 @@ export default function Dashboard() {
             <AreaChart data={chart}>
               <defs>
                 <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.35} />
-                  <stop offset="100%" stopColor="#7c3aed" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#10B981" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="#10B981" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#eef2f7" vertical={false} />
               <XAxis dataKey="t" tick={{ fontSize: 11, fill: "#94a3b8" }} axisLine={false} tickLine={false} minTickGap={30} />
               <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} axisLine={false} tickLine={false} width={48} tickFormatter={(v) => "$" + v} />
               <Tooltip formatter={(v) => fmtUsd(v)} />
-              <Area type="monotone" dataKey="value" stroke="#7c3aed" strokeWidth={2.5} fill="url(#g)" />
+              <Area type="monotone" dataKey="value" stroke="#10B981" strokeWidth={2.5} fill="url(#g)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>

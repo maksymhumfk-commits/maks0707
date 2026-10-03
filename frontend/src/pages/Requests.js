@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Plus, Copy, ExternalLink, XCircle, Trash2 } from "lucide-react";
+import { Plus, Copy, ExternalLink, XCircle, Trash2, Search } from "lucide-react";
 import api, { apiErr } from "@/lib/api";
 import { useLang } from "@/lib/i18n";
-import { StatusBadge, fmtUsd } from "@/components/common";
+import { StatusBadge, fmtUsd, fmtDateTime } from "@/components/common";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +25,37 @@ export default function Requests() {
   const [price, setPrice] = useState("");
   const [cur, setCur] = useState("USDT");
   const [desc, setDesc] = useState("");
+
+  // ---- payout filters: date/period + search by wallet or hash ----
+  const [pSearch, setPSearch] = useState("");
+  const [pPeriod, setPPeriod] = useState("all");
+  const [pFrom, setPFrom] = useState("");
+  const [pTo, setPTo] = useState("");
+
+  const filteredPayouts = useMemo(() => {
+    const q = pSearch.trim().toLowerCase();
+    const now = Date.now() / 1000;
+    const DAY = 86400;
+    let from = null, to = null;
+    if (pPeriod === "today") from = Math.floor(now / DAY) * DAY;
+    else if (pPeriod === "7d") from = now - 7 * DAY;
+    else if (pPeriod === "30d") from = now - 30 * DAY;
+    else if (pPeriod === "custom") {
+      if (pFrom) from = new Date(pFrom + "T00:00:00").getTime() / 1000;
+      if (pTo) to = new Date(pTo + "T23:59:59").getTime() / 1000;
+    }
+    return payouts.filter((p) => {
+      const ts = p.created_ts || 0;
+      if (from != null && ts < from) return false;
+      if (to != null && ts > to) return false;
+      if (q) {
+        const hay = [p.address, p.txid, p.hash, p.tx_hash, p.order_id, p.id, p.pr_id]
+          .filter(Boolean).join(" ").toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [payouts, pSearch, pPeriod, pFrom, pTo]);
 
   const load = () => api.get("/invoices").then((r) => setInvoices(r.data.data)).catch(() => {});
   const loadPayouts = () => api.get("/payouts").then((r) => setPayouts(r.data.data || [])).catch(() => {});
@@ -141,15 +172,59 @@ export default function Requests() {
       <div className="rounded-3xl bg-white p-5 shadow-sm border border-slate-100" data-testid="payouts-section">
         <h2 className="text-lg font-bold text-slate-900 mb-1">Заявки на виведення (API)</h2>
         <p className="text-xs text-slate-400 mb-4">Виплати, створені мерчантом через <span className="font-mono">/api/v1/private/create-output</span></p>
+
+        {/* Filters: period + dates + search by wallet/hash */}
+        <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="relative flex-1 min-w-[200px]">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Input
+              data-testid="payout-search"
+              value={pSearch}
+              onChange={(e) => setPSearch(e.target.value)}
+              placeholder="Пошук за гаманцем, хешем, Order або ID"
+              className="rounded-full pl-9"
+            />
+          </div>
+          <Select value={pPeriod} onValueChange={setPPeriod}>
+            <SelectTrigger data-testid="payout-period" className="rounded-full w-full sm:w-[170px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-slate-200">
+              <SelectItem value="all">Увесь час</SelectItem>
+              <SelectItem value="today">Сьогодні</SelectItem>
+              <SelectItem value="7d">Останні 7 днів</SelectItem>
+              <SelectItem value="30d">Останні 30 днів</SelectItem>
+              <SelectItem value="custom">Свій період</SelectItem>
+            </SelectContent>
+          </Select>
+          {pPeriod === "custom" && (
+            <div className="flex items-center gap-2">
+              <Input data-testid="payout-date-from" type="date" value={pFrom} onChange={(e) => setPFrom(e.target.value)} className="rounded-full w-full sm:w-[150px]" />
+              <span className="text-slate-400 text-sm">—</span>
+              <Input data-testid="payout-date-to" type="date" value={pTo} onChange={(e) => setPTo(e.target.value)} className="rounded-full w-full sm:w-[150px]" />
+            </div>
+          )}
+          {(pSearch || pPeriod !== "all") && (
+            <Button variant="ghost" size="sm" data-testid="payout-reset" className="rounded-full text-slate-500"
+              onClick={() => { setPSearch(""); setPPeriod("all"); setPFrom(""); setPTo(""); }}>
+              Скинути
+            </Button>
+          )}
+          <span className="text-xs text-slate-400 sm:ml-auto" data-testid="payout-count">
+            Знайдено: {filteredPayouts.length}
+          </span>
+        </div>
+
         <div className="oki-scroll overflow-x-auto">
           <table className="w-full text-sm">
             <thead><tr className="text-left text-xs text-slate-400">
-              <th className="py-2">ID</th><th>Order</th><th>Сума</th><th>Мережа</th><th>Адреса</th><th>Статус</th><th className="text-right">Tx</th>
+              <th className="py-2">ID</th><th>Дата</th><th>Order</th><th>Сума</th><th>Мережа</th><th>Адреса</th><th>Статус</th><th className="text-right">Tx</th>
             </tr></thead>
             <tbody>
-              {payouts.map((p) => (
+              {filteredPayouts.map((p) => (
                 <tr key={p.pr_id} data-testid={`payout-row-${p.order_id || p.pr_id}`} className="border-t border-slate-100">
                   <td className="py-3 font-mono text-xs text-slate-700">{p.id}</td>
+                  <td className="whitespace-nowrap text-xs text-slate-500" data-testid={`payout-date-${p.order_id || p.pr_id}`}>{fmtDateTime(p.created_ts) || "—"}</td>
                   <td className="text-slate-600">{p.order_id || "—"}</td>
                   <td className="font-semibold text-slate-800">{p.amount} {p.currency}</td>
                   <td className="text-slate-500">{p.network}</td>
